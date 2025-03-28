@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { AmenitiesService } from './amenities.service';
 import { Amenity } from './amenity.model';
+import { AmenityExistsPipe } from './pipes/amenity-exists.pipe';
 
 @Controller('amenities')
 export class AmenitiesController {
@@ -22,7 +23,7 @@ export class AmenitiesController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe, AmenityExistsPipe) id: number,
   ): Promise<Amenity | string> {
     const data = await this.amenitiesService.getDetails(id);
 
@@ -31,7 +32,9 @@ export class AmenitiesController {
 
   @Delete(':id')
   @HttpCode(204)
-  async delete(@Param('id', ParseIntPipe) id: number): Promise<string> {
+  async delete(
+    @Param('id', ParseIntPipe, AmenityExistsPipe) id: number,
+  ): Promise<string> {
     await this.amenitiesService.delete(id);
 
     return 'Amenity deleted successfully';
