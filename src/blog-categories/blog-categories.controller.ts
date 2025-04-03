@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { BlogCategoriesService } from './blog-categories.service';
 import { BlogCategory } from './blog-category.model';
+import { BlogCategoryExistsPipe } from './pipes/blog-category-exists.pipe';
 
 @Controller('blog-categories')
 export class BlogCategoriesController {
@@ -22,7 +23,7 @@ export class BlogCategoriesController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe, BlogCategoryExistsPipe) id: number,
   ): Promise<BlogCategory | string> {
     const category = await this.blogCategoryService.getDetails(id);
 
@@ -31,7 +32,7 @@ export class BlogCategoriesController {
 
   @Delete('id')
   @HttpCode(204)
-  async delete(@Param('id', ParseIntPipe) id: number): Promise<string> {
+  async delete(@Param('id', ParseIntPipe, BlogCategoryExistsPipe) id: number): Promise<string> {
     await this.blogCategoryService.delete(id);
 
     return 'Blog category deleted successfully';
