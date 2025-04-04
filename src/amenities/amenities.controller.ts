@@ -35,6 +35,8 @@ export class AmenitiesController {
 
   @Post()
   async create(@Body() createAmenityDto: CreateAmenityDto): Promise<string> {
+    await this.amenitiesService.save(createAmenityDto);
+
     return 'Amenity created successfully';
   }
 

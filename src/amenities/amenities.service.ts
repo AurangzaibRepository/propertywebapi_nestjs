@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Amenity } from './amenity.model';
+import { AmenityInterface } from './interfaces/amenity.interface';
 
 @Injectable()
 export class AmenitiesService {
@@ -21,6 +22,10 @@ export class AmenitiesService {
     const data = await this.amenity.findByPk(id);
 
     return data ?? null;
+  }
+
+  async save(data: AmenityInterface) {
+    await this.amenity.create(data);
   }
 
   async delete(id: number) {
