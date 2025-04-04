@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { LocationsService } from './locations.service';
 import { Location } from './location.model';
+import { LocationExistsPipe } from './pipes/location-exists.pipe';
 
 @Controller('locations')
 export class LocationsController {
@@ -31,7 +32,7 @@ export class LocationsController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe, LocationExistsPipe) id: number,
   ): Promise<Location | string> {
     const data = await this.locationsService.getDetails(id);
 
@@ -40,7 +41,9 @@ export class LocationsController {
 
   @Delete(':id')
   @HttpCode(204)
-  async delete(@Param('id', ParseIntPipe) id: number): Promise<string> {
+  async delete(
+    @Param('id', ParseIntPipe, LocationExistsPipe) id: number,
+  ): Promise<string> {
     await this.locationsService.delete(id);
 
     return 'Location deleted successfully';

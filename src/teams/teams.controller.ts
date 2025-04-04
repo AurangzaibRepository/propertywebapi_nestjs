@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { Team } from './team.model';
+import { TeamExistsPipe } from './pipes/team-exists.pipe';
 
 @Controller('teams')
 export class TeamsController {
@@ -30,7 +31,9 @@ export class TeamsController {
   }
 
   @Get(':id')
-  async details(@Param('id', ParseIntPipe) id: number): Promise<Team | string> {
+  async details(
+    @Param('id', ParseIntPipe, TeamExistsPipe) id: number,
+  ): Promise<Team | string> {
     const data = await this.teamsService.getDetails(id);
 
     return data ?? 'Team not found';
@@ -38,7 +41,9 @@ export class TeamsController {
 
   @Delete(':id')
   @HttpCode(204)
-  async delete(@Param('id', ParseIntPipe) id: number): Promise<string> {
+  async delete(
+    @Param('id', ParseIntPipe, TeamExistsPipe) id: number,
+  ): Promise<string> {
     await this.teamsService.delete(id);
 
     return 'Team deleted successfully';

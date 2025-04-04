@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { PartnersService } from './partners.service';
 import { Partner } from './partner.model';
+import { PartnerExistsPipe } from './pipes/partner-exists.pipe';
 
 @Controller('partners')
 export class PartnersController {
@@ -31,7 +32,7 @@ export class PartnersController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe, PartnerExistsPipe) id: number,
   ): Promise<Partner | string> {
     const data = await this.partnersService.getDetails(id);
 
@@ -40,7 +41,9 @@ export class PartnersController {
 
   @Delete(':id')
   @HttpCode(204)
-  async delete(@Param('id', ParseIntPipe) id: number): Promise<string> {
+  async delete(
+    @Param('id', ParseIntPipe, PartnerExistsPipe) id: number,
+  ): Promise<string> {
     await this.partnersService.delete(id);
 
     return 'Partner deleted successfully';

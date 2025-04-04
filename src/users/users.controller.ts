@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { User } from './user.model';
 import { UsersService } from './users.service';
+import { UserExistsPipe } from './pipes/user-exists.pipe';
 
 @Controller('users')
 export class UsersController {
@@ -30,7 +31,9 @@ export class UsersController {
   }
 
   @Get(':id')
-  async details(@Param('id', ParseIntPipe) id: number): Promise<User | string> {
+  async details(
+    @Param('id', ParseIntPipe, UserExistsPipe) id: number,
+  ): Promise<User | string> {
     const user = await this.usersService.getDetails(id);
 
     return user ?? 'User not found';
@@ -38,7 +41,9 @@ export class UsersController {
 
   @Delete(':id')
   @HttpCode(204)
-  async delete(@Param('id', ParseIntPipe) id: number): Promise<string> {
+  async delete(
+    @Param('id', ParseIntPipe, UserExistsPipe) id: number,
+  ): Promise<string> {
     await this.usersService.delete(id);
 
     return 'User deleted successfully';

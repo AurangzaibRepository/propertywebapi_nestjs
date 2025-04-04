@@ -1,14 +1,17 @@
 import {
   Controller,
   Get,
+  Post,
   Delete,
   HttpCode,
   Param,
   ParseIntPipe,
+  Body,
 } from '@nestjs/common';
 import { AmenitiesService } from './amenities.service';
 import { Amenity } from './amenity.model';
 import { AmenityExistsPipe } from './pipes/amenity-exists.pipe';
+import { CreateAmenityDto } from './dto/create-amenity.dto';
 
 @Controller('amenities')
 export class AmenitiesController {
@@ -28,6 +31,11 @@ export class AmenitiesController {
     const data = await this.amenitiesService.getDetails(id);
 
     return data ?? 'Amenity not found';
+  }
+
+  @Post()
+  async create(@Body() createAmenityDto: CreateAmenityDto): Promise<string> {
+    return 'Amenity created successfully';
   }
 
   @Delete(':id')

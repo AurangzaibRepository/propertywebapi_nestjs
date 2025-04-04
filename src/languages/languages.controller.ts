@@ -1,6 +1,7 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { LanguagesService } from './languages.service';
 import { Language } from './language.model';
+import { LanguageExistsPipe } from './pipes/language-exists.pipe';
 
 @Controller('languages')
 export class LanguagesController {
@@ -15,7 +16,7 @@ export class LanguagesController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe, LanguageExistsPipe) id: number,
   ): Promise<Language | string> {
     const data = await this.languagesService.getDetails(id);
 
