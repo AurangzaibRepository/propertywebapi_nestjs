@@ -1,15 +1,18 @@
 import {
   Controller,
   Get,
+  Post,
   Delete,
   HttpCode,
   Param,
+  Body,
   ParseIntPipe,
 } from '@nestjs/common';
 import { PageValidationPipe } from './pipes/page-validation.pipe';
 import { FAQExistsPipe } from './pipes/faq-exists.pipe';
 import { FaqsService } from './faqs.service';
 import { FAQ } from './faq.model';
+import { CreateFAQDto } from './dto/create-faq.dto';
 
 @Controller('faqs')
 export class FaqsController {
@@ -29,6 +32,13 @@ export class FaqsController {
     const data = await this.faqsService.getDetails(id);
 
     return data ?? 'FAQ not found';
+  }
+
+  @Post()
+  async create(@Body() createFAQDto: CreateFAQDto): Promise<string> {
+    await this.faqsService.save(createFAQDto);
+
+    return 'FAQ created successfully';
   }
 
   @Delete(':id')

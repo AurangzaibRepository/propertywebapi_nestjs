@@ -1,7 +1,4 @@
-import {
-  PipeTransform,
-  BadRequestException
-} from '@nestjs/common';
+import { PipeTransform, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Amenity } from '../amenity.model';
 

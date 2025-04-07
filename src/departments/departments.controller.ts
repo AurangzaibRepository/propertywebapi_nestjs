@@ -1,14 +1,17 @@
 import {
   Controller,
   Get,
+  Post,
   Delete,
   HttpCode,
   Param,
+  Body,
   ParseIntPipe,
 } from '@nestjs/common';
 import { DepartmentsService } from './departments.service';
 import { Department } from './department.model';
 import { DepartmentExistsPipe } from './pipes/department-exists.pipe';
+import { CreateDepartmentDto } from './dto/create-department.dto';
 
 @Controller('departments')
 export class DepartmentsController {
@@ -37,6 +40,15 @@ export class DepartmentsController {
     const data = await this.departmentsService.getDetails(id);
 
     return data ?? 'Department not found';
+  }
+
+  @Post()
+  async create(
+    @Body() createDepartmentDto: CreateDepartmentDto,
+  ): Promise<string> {
+    await this.departmentsService.save(createDepartmentDto);
+
+    return 'Department created successfully';
   }
 
   @Delete(':id')

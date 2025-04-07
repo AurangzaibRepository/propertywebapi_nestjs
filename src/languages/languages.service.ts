@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Language } from './language.model';
+import { LanguageInterface } from './interfaces/language.interface';
 
 @Injectable()
 export class LanguagesService {
@@ -21,5 +22,9 @@ export class LanguagesService {
     const data = await this.language.findByPk(id);
 
     return data;
+  }
+
+  async save(data: LanguageInterface) {
+    await this.language.create(data);
   }
 }

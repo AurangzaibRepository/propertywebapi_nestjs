@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Logger } from '../logger/logger.service';
 import { FormatService } from '../helpers/format.service';
 import { Blog } from './blog.model';
+import { BlogInterface } from './interfaces/blog.interface';
 
 @Injectable()
 export class BlogsService {
@@ -41,6 +42,10 @@ export class BlogsService {
     const blog = await this.blog.findByPk(id);
 
     return blog ?? null;
+  }
+
+  async save(data: BlogInterface) {
+    await this.blog.create(data);
   }
 
   async delete(id: number) {

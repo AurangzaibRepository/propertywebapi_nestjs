@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { BlogCategory } from './blog-category.model';
+import { BlogCategoryInterface } from './interfaces/blog-category.interface';
 
 @Injectable()
 export class BlogCategoriesService {
@@ -21,6 +22,10 @@ export class BlogCategoriesService {
     const category = await this.blogCategory.findByPk(id);
 
     return category ?? null;
+  }
+
+  async save(data: BlogCategoryInterface) {
+    await this.blogCategory.create(data);
   }
 
   async delete(id: number) {

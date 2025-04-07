@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { FormatService } from 'src/helpers/format.service';
 import { Department } from './department.model';
+import { DepartmentInterface } from './interfaces/department.interface';
 
 @Injectable()
 export class DepartmentsService {
@@ -32,6 +33,10 @@ export class DepartmentsService {
     const data = await this.department.findByPk(id);
 
     return data ?? null;
+  }
+
+  async save(data: DepartmentInterface) {
+    await this.department.create(data);
   }
 
   async delete(id: number) {

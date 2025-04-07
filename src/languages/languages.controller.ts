@@ -1,6 +1,14 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  Body,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { LanguagesService } from './languages.service';
 import { Language } from './language.model';
+import { CreateLanguageDto } from './dto/create-language.dto';
 import { LanguageExistsPipe } from './pipes/language-exists.pipe';
 
 @Controller('languages')
@@ -21,5 +29,12 @@ export class LanguagesController {
     const data = await this.languagesService.getDetails(id);
 
     return data ?? 'Language not found';
+  }
+
+  @Post()
+  async create(@Body() createLanguageDto: CreateLanguageDto): Promise<string> {
+    await this.languagesService.save(createLanguageDto);
+
+    return 'Language created successfully';
   }
 }

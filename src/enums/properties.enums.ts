@@ -8,6 +8,6 @@ export enum STATUS {
 }
 
 export enum PUBLISH_STATUS {
-    PUBLISH = 'Publish',
-    DRAFT = 'Draft'
+  PUBLISH = 'Publish',
+  DRAFT = 'Draft',
 }

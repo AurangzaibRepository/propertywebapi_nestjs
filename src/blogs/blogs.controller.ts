@@ -1,14 +1,17 @@
 import {
   Controller,
   Get,
+  Post,
   Delete,
   Param,
+  Body,
   HttpCode,
   ParseIntPipe,
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { Blog } from './blog.model';
 import { BlogExistsPipe } from './pipes/blog-exists.pipe';
+import { CreateBlogDto } from './dto/create-blog.dto';
 
 @Controller('blogs')
 export class BlogsController {
@@ -31,15 +34,26 @@ export class BlogsController {
   }
 
   @Get(':id')
-  async details(@Param('id', ParseIntPipe, BlogExistsPipe) id: number): Promise<Blog | string> {
+  async details(
+    @Param('id', ParseIntPipe, BlogExistsPipe) id: number,
+  ): Promise<Blog | string> {
     const blog = await this.blogsService.getDetails(id);
 
     return blog ?? 'Blog not found';
   }
 
+  @Post()
+  async create(@Body() createBlogDto: CreateBlogDto): Promise<string> {
+    await this.blogsService.save(createBlogDto);
+
+    return 'Blog created successfully';
+  }
+
   @Delete(':id')
   @HttpCode(204)
-  async delete(@Param('id', ParseIntPipe, BlogExistsPipe) id: number): Promise<string> {
+  async delete(
+    @Param('id', ParseIntPipe, BlogExistsPipe) id: number,
+  ): Promise<string> {
     await this.blogsService.delete(id);
 
     return 'Blog deleted successfully';

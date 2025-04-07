@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { FAQ } from './faq.model';
+import { FAQInterface } from './interfaces/faq.interface';
 
 @Injectable()
 export class FaqsService {
@@ -21,6 +22,10 @@ export class FaqsService {
     const data = await this.faq.findByPk(id);
 
     return data ?? null;
+  }
+
+  async save(data: FAQInterface) {
+    await this.faq.create(data);
   }
 
   async delete(id: number) {

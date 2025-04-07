@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { PropertyTypesService } from './property-types.service';
 import { PropertyType } from 'src/property-types/property-type.model';
 import { PropertyTypeExistsPipe } from './pipes/property-type-exists.pipe';
