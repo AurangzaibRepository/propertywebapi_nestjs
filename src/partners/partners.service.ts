@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { FormatService } from 'src/helpers/format.service';
 import { Partner } from './partner.model';
+import { PartnerInterface } from './interfaces/partner.interface';
 
 @Injectable()
 export class PartnersService {
@@ -34,6 +35,10 @@ export class PartnersService {
     const data = await this.partner.findByPk(id);
 
     return data ?? null;
+  }
+
+  async save(data: PartnerInterface) {
+    await this.partner.create(data);
   }
 
   async delete(id: number) {

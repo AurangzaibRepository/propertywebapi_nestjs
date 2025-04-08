@@ -1,14 +1,17 @@
 import {
   Controller,
   Get,
+  Post,
   Delete,
   HttpCode,
   Param,
+  Body,
   ParseIntPipe,
 } from '@nestjs/common';
 import { PartnersService } from './partners.service';
 import { Partner } from './partner.model';
 import { PartnerExistsPipe } from './pipes/partner-exists.pipe';
+import { CreatePartnerDto } from './dto/create-partner.dto';
 
 @Controller('partners')
 export class PartnersController {
@@ -37,6 +40,13 @@ export class PartnersController {
     const data = await this.partnersService.getDetails(id);
 
     return data ?? 'Partner not found';
+  }
+
+  @Post()
+  async create(@Body() createPartnerDto: CreatePartnerDto): Promise<string> {
+    await this.partnersService.save(createPartnerDto);
+
+    return 'Partner created successfully';
   }
 
   @Delete(':id')

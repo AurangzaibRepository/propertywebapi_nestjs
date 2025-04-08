@@ -1,13 +1,17 @@
 import {
   Controller,
   Get,
+  Post,
+  Put,
   Delete,
   HttpCode,
   Param,
+  Body,
   ParseIntPipe,
 } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { Team } from './team.model';
+import { CreateTeamDto } from './dto/create-team.dto';
 import { TeamExistsPipe } from './pipes/team-exists.pipe';
 
 @Controller('teams')
@@ -37,6 +41,23 @@ export class TeamsController {
     const data = await this.teamsService.getDetails(id);
 
     return data ?? 'Team not found';
+  }
+
+  @Post()
+  async create(@Body() createTeamDto: CreateTeamDto): Promise<string> {
+    await this.teamsService.save(createTeamDto);
+
+    return 'Team created successfully';
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe, TeamExistsPipe) id: number,
+    @Body() updateTeamDto: CreateTeamDto,
+  ): Promise<string> {
+    await this.teamsService.update(id, updateTeamDto);
+
+    return 'Team updated successfully';
   }
 
   @Delete(':id')

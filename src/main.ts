@@ -13,6 +13,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   // Apply global pipes
+  // If we do not set here, we need to set in every Body decorator
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

@@ -1,14 +1,17 @@
 import {
   Controller,
   Get,
+  Post,
   Delete,
   HttpCode,
   Param,
+  Body,
   ParseIntPipe,
 } from '@nestjs/common';
 import { LocationsService } from './locations.service';
 import { Location } from './location.model';
 import { LocationExistsPipe } from './pipes/location-exists.pipe';
+import { CreateLocationDto } from './dto/create-location.dto';
 
 @Controller('locations')
 export class LocationsController {
@@ -37,6 +40,13 @@ export class LocationsController {
     const data = await this.locationsService.getDetails(id);
 
     return data ?? 'Location not found';
+  }
+
+  @Post()
+  async create(@Body() createLocationDto: CreateLocationDto): Promise<string> {
+    await this.locationsService.save(createLocationDto);
+
+    return 'Location created successfully';
   }
 
   @Delete(':id')

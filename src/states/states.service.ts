@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { State } from './state.model';
+import { StateInterface } from './interfaces/state.interface';
 
 @Injectable()
 export class StatesService {
@@ -21,6 +22,16 @@ export class StatesService {
     const data = await this.state.findByPk(id);
 
     return data ?? null;
+  }
+
+  async save(data: StateInterface) {
+    await this.state.create(data);
+  }
+
+  async update(id: number, data: StateInterface) {
+    await this.state.update(data, {
+      where: { id },
+    });
   }
 
   async delete(id: number) {

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { FormatService } from 'src/helpers/format.service';
 import { Team } from './team.model';
+import { TeamInterface } from './interfaces/team.interface';
 
 @Injectable()
 export class TeamsService {
@@ -34,6 +35,16 @@ export class TeamsService {
     const data = await this.team.findByPk(id);
 
     return data ?? null;
+  }
+
+  async save(data: TeamInterface) {
+    await this.team.create(data);
+  }
+
+  async update(id: number, data: TeamInterface) {
+    await this.team.update(data, {
+      where: { id },
+    });
   }
 
   async delete(id: number) {

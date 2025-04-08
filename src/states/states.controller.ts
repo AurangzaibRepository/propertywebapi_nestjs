@@ -1,13 +1,17 @@
 import {
   Controller,
   Get,
+  Post,
+  Put,
   Delete,
   HttpCode,
   Param,
+  Body,
   ParseIntPipe,
 } from '@nestjs/common';
 import { StatesService } from './states.service';
 import { State } from './state.model';
+import { CreateStateDto } from './dto/create-state.dto';
 import { StateExistsPipe } from './pipes/state-exists.pipe';
 
 @Controller('states')
@@ -28,6 +32,23 @@ export class StatesController {
     const data = await this.statesService.getDetails(id);
 
     return data ?? 'State not found';
+  }
+
+  @Post()
+  async create(@Body() createStateDto: CreateStateDto): Promise<string> {
+    await this.statesService.save(createStateDto);
+
+    return 'State created successfully';
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe, StateExistsPipe) id: number,
+    @Body() updateStateDto: CreateStateDto,
+  ): Promise<string> {
+    await this.statesService.update(id, updateStateDto);
+
+    return 'State updated successfully';
   }
 
   @Delete(':id')

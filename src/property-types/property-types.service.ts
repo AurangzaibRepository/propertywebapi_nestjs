@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { PropertyType } from './property-type.model';
+import { PropertyTypeInterface } from './interfaces/property-type.interface';
 
 @Injectable()
 export class PropertyTypesService {
@@ -21,5 +22,15 @@ export class PropertyTypesService {
     const data = await this.propertyType.findByPk(id);
 
     return data;
+  }
+
+  async save(data: PropertyTypeInterface) {
+    await this.propertyType.create(data);
+  }
+
+  async update(id: number, data: PropertyTypeInterface) {
+    await this.propertyType.update(data, {
+      where: { id },
+    });
   }
 }

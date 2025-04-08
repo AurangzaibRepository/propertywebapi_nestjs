@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Metadata } from './metadata.model';
+import { MetadataInterface } from './interfaces/metadata.interface';
 
 @Injectable()
 export class MetadataService {
@@ -15,5 +16,11 @@ export class MetadataService {
     });
 
     return data;
+  }
+
+  async update(page: string, data: MetadataInterface) {
+    await this.metadata.update(data, {
+      where: { page },
+    });
   }
 }
