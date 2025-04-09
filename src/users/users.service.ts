@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { FormatService } from 'src/helpers/format.service';
+import * as bcrypt from 'bcrypt';
 import { User } from './user.model';
+import { UserInterface } from './interfaces/user.interface';
 
 @Injectable()
 export class UsersService {
@@ -34,6 +36,25 @@ export class UsersService {
     const data = await this.user.findByPk(id);
 
     return data ?? null;
+  }
+
+  async save(data: UserInterface) {
+    // Hash password before saving
+    const hashedPassword = await bcrypt.hash(
+      data.password,
+      process.env.HASH_SALT_ROUNDS || 10,
+    );
+
+    await this.user.create({
+      ...data,
+      password: hashedPassword,
+    });
+  }
+
+  async update(id: number, data: UserInterface) {
+    await this.user.update(data, {
+      where: { id },
+    });
   }
 
   async delete(id: number) {
