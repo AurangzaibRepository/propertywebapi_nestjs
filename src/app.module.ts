@@ -23,6 +23,7 @@ import { MetadataModule } from './metadata/metadata.module';
 import { LanguagesModule } from './languages/languages.module';
 import { LanguageService } from './language/language.service';
 import { TeamLanguageModule } from './team-language/team-language.module';
+import { DevelopersModule } from './developers/developers.module';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { TeamLanguageModule } from './team-language/team-language.module';
     MetadataModule,
     LanguagesModule,
     TeamLanguageModule,
+    DevelopersModule,
   ],
   controllers: [AppController],
   providers: [AppService, PropertyTypeService, LanguageService],
