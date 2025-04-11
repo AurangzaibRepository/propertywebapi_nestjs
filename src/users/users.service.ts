@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { FormatService } from 'src/helpers/format.service';
 import * as bcrypt from 'bcrypt';
+import { FormatService } from 'src/helpers/format.service';
 import { User } from './user.model';
 import { UserInterface } from './interfaces/user.interface';
 

@@ -2,12 +2,19 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { Logger } from './logger/logger.service';
+import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { AuthenticationMiddleware } from './middlewares/authentication.middleware';
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'log'],
   });
   app.useLogger(app.get(Logger));
+
+  // Global middlewares
+  app.use(AuthenticationMiddleware);
+  app.use(LoggerMiddleware);
 
   // Set global prefix for all routes
   app.setGlobalPrefix('api');
