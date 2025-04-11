@@ -14,6 +14,7 @@ import { Location } from 'src/locations/location.model';
 import { Team } from 'src/teams/team.model';
 import { PropertyType } from 'src/property-types/property-type.model';
 import { PropertyImage } from 'src/property-images/property-image.model';
+import { Developer } from 'src/developers/developer.model';
 import { STATUS, PUBLISH_STATUS } from 'src/enums/properties.enums';
 
 @DefaultScope(() => ({
@@ -90,6 +91,11 @@ export class Property extends Model {
   @Column
   PropertyTypeId: number;
 
+  @ForeignKey(() => Developer)
+  @AllowNull(false)
+  @Column
+  DeveloperId: number;
+
   @AllowNull(false)
   @Unique
   @Column(DataType.STRING(30))
@@ -132,6 +138,9 @@ export class Property extends Model {
 
   @BelongsTo(() => PropertyType)
   propertyType: PropertyType;
+
+  @BelongsTo(() => Developer)
+  developer: Developer;
 
   @HasMany(() => PropertyImage)
   propertyImages: PropertyImage[];
