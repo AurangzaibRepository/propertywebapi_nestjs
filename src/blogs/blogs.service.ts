@@ -48,6 +48,12 @@ export class BlogsService {
     await this.blog.create(data);
   }
 
+  async update(id: number, data: BlogInterface) {
+    await this.blog.update(data, {
+      where: { id }
+    });
+  })
+
   async delete(id: number) {
     await this.blog.destroy({
       where: { id },

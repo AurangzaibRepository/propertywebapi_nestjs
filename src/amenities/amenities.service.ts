@@ -28,6 +28,12 @@ export class AmenitiesService {
     await this.amenity.create(data);
   }
 
+  async update(id: number, data: AmenityInterface) {
+    await this.amenity.update(data, {
+      where: { id },
+    });
+  }
+
   async delete(id: number) {
     await this.amenity.destroy({
       where: { id },

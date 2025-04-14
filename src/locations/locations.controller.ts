@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Delete,
   HttpCode,
   Param,
@@ -47,6 +48,16 @@ export class LocationsController {
     await this.locationsService.save(createLocationDto);
 
     return 'Location created successfully';
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe, LocationExistsPipe) id: number,
+    @Body() updateLocationDto: CreateLocationDto,
+  ): Promise<string> {
+    await this.locationsService.update(id, updateLocationDto);
+
+    return 'Location updated successfully';
   }
 
   @Delete(':id')

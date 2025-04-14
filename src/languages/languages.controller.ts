@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Param,
   Body,
   ParseIntPipe,
@@ -36,5 +37,15 @@ export class LanguagesController {
     await this.languagesService.save(createLanguageDto);
 
     return 'Language created successfully';
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe, LanguageExistsPipe) id: number,
+    @Body() updateLanguageDto: CreateLanguageDto,
+  ): Promise<string> {
+    await this.languagesService.update(id, updateLanguageDto);
+
+    return 'Language updated successfully';
   }
 }

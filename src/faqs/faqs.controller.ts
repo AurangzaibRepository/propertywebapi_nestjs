@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Delete,
   HttpCode,
   Param,
@@ -39,6 +40,16 @@ export class FaqsController {
     await this.faqsService.save(createFAQDto);
 
     return 'FAQ created successfully';
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe, FAQExistsPipe) id: number,
+    @Body() updateFAQDto: CreateFAQDto,
+  ): Promise<string> {
+    await this.faqsService.update(id, updateFAQDto);
+
+    return 'FAQ updated successfully';
   }
 
   @Delete(':id')

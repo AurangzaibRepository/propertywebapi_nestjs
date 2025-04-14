@@ -28,6 +28,12 @@ export class FaqsService {
     await this.faq.create(data);
   }
 
+  async update(id: number, data: FAQInterface) {
+    await this.faq.update(data, {
+      where: { id },
+    });
+  }
+
   async delete(id: number) {
     await this.faq.destroy({
       where: { id },

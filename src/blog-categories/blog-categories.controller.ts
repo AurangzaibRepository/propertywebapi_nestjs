@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Delete,
   HttpCode,
   Param,
@@ -42,7 +43,17 @@ export class BlogCategoriesController {
     return 'Blog category created successfully';
   }
 
-  @Delete('id')
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe, BlogCategoryExistsPipe) id: number,
+    @Body() updateBlogCategortDto: CreateBlogCategoryDto,
+  ): Promise<string> {
+    await this.blogCategoryService.update(id, updateBlogCategortDto);
+
+    return 'Blog category updated successfully';
+  }
+
+  @Delete(':id')
   @HttpCode(204)
   async delete(
     @Param('id', ParseIntPipe, BlogCategoryExistsPipe) id: number,

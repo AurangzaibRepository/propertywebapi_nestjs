@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Delete,
   HttpCode,
   Param,
@@ -49,6 +50,16 @@ export class DepartmentsController {
     await this.departmentsService.save(createDepartmentDto);
 
     return 'Department created successfully';
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe, DepartmentExistsPipe) id: number,
+    @Body() updateDepartmentDto: CreateDepartmentDto,
+  ): Promise<string> {
+    await this.departmentsService.update(id, updateDepartmentDto);
+
+    return 'Department updated successfully';
   }
 
   @Delete(':id')

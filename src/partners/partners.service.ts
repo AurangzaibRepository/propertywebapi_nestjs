@@ -41,6 +41,12 @@ export class PartnersService {
     await this.partner.create(data);
   }
 
+  async update(id: number, data: PartnerInterface) {
+    await this.partner.update(data, {
+      where: { id },
+    });
+  }
+
   async delete(id: number) {
     await this.partner.destroy({
       where: { id },

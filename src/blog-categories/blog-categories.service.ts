@@ -28,6 +28,12 @@ export class BlogCategoriesService {
     await this.blogCategory.create(data);
   }
 
+  async update(id: number, data: BlogCategoryInterface) {
+    await this.blogCategory.update(data, {
+      where: { id },
+    });
+  }
+
   async delete(id: number) {
     await this.blogCategory.destroy({
       where: { id },

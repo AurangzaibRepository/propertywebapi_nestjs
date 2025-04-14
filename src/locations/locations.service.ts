@@ -41,6 +41,12 @@ export class LocationsService {
     await this.location.create(data);
   }
 
+  async update(id: number, data: LocationInterface) {
+    this.location.update(data, {
+      where: { id },
+    });
+  }
+
   async delete(id: number) {
     await this.location.destroy({
       where: { id },

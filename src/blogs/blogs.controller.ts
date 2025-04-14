@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Delete,
   Param,
   Body,
@@ -47,6 +48,16 @@ export class BlogsController {
     await this.blogsService.save(createBlogDto);
 
     return 'Blog created successfully';
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe, BlogExistsPipe) id: number,
+    @Body() updateBlogDto: CreateBlogDto,
+  ): Promise<string> {
+    await this.blogsService.update(id, updateBlogDto);
+
+    return 'Blog updated successfully';
   }
 
   @Delete(':id')

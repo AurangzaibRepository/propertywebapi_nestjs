@@ -39,6 +39,12 @@ export class DepartmentsService {
     await this.department.create(data);
   }
 
+  async update(id: number, data: DepartmentInterface) {
+    await this.department.update(data, {
+      where: { id },
+    });
+  }
+
   async delete(id: number) {
     await this.department.destroy({
       where: { id },

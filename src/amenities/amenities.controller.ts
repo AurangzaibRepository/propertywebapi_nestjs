@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Delete,
   HttpCode,
   Param,
@@ -38,6 +39,16 @@ export class AmenitiesController {
     await this.amenitiesService.save(createAmenityDto);
 
     return 'Amenity created successfully';
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe, AmenityExistsPipe) id: number,
+    @Body() updateAmenityDto: CreateAmenityDto,
+  ): Promise<string> {
+    await this.amenitiesService.update(id, updateAmenityDto);
+
+    return 'Amenity updated successfully';
   }
 
   @Delete(':id')

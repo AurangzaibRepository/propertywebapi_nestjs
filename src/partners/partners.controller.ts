@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Delete,
   HttpCode,
   Param,
@@ -47,6 +48,16 @@ export class PartnersController {
     await this.partnersService.save(createPartnerDto);
 
     return 'Partner created successfully';
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe, PartnerExistsPipe) id: number,
+    @Body() updatePartnerDto: CreatePartnerDto,
+  ): Promise<string> {
+    await this.partnersService.update(id, updatePartnerDto);
+
+    return 'Partner updated successfully';
   }
 
   @Delete(':id')

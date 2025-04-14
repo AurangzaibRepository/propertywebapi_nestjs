@@ -27,4 +27,10 @@ export class LanguagesService {
   async save(data: LanguageInterface) {
     await this.language.create(data);
   }
+
+  async update(id: number, data: LanguageInterface) {
+    await this.language.update(data, {
+      where: { id },
+    });
+  }
 }
