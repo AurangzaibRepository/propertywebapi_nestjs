@@ -33,4 +33,10 @@ export class PropertyTypesService {
       where: { id },
     });
   }
+
+  async delete(id: number) {
+    await this.propertyType.destroy({
+      where: { id },
+    });
+  }
 }

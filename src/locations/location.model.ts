@@ -5,7 +5,9 @@ import {
   AllowNull,
   DefaultScope,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
+import { Property } from 'src/properties/property.model';
 import { State } from 'src/states/state.model';
 
 @DefaultScope(() => ({
@@ -31,4 +33,7 @@ export class Location extends Model {
 
   @BelongsTo(() => State)
   state: State;
+
+  @HasMany(() => Property)
+  properties: Property[];
 }

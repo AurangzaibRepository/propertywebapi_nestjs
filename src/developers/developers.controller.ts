@@ -3,11 +3,14 @@ import {
   Get,
   Post,
   Put,
+  Delete,
   Param,
   Body,
   ParseIntPipe,
+  HttpCode,
 } from '@nestjs/common';
 import { DeveloperExistsPipe } from './pipes/developer-exists.pipe';
+import { DeveloperLinkPipe } from './pipes/developer-link.pipe';
 import { DevelopersService } from './developers.service';
 import { Developer } from './developer.model';
 import { CreateDeveloperDto } from './dto/create-developer.dto';
@@ -58,5 +61,16 @@ export class DevelopersController {
     await this.developersService.update(id, createDeveloperDto);
 
     return 'Developer updated successfully';
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  async delete(
+    @Param('id', ParseIntPipe, DeveloperExistsPipe, DeveloperLinkPipe)
+    id: number,
+  ): Promise<string> {
+    await this.developersService.delete(id);
+
+    return 'Developer deleted successfully';
   }
 }

@@ -13,6 +13,7 @@ import { StatesService } from './states.service';
 import { State } from './state.model';
 import { CreateStateDto } from './dto/create-state.dto';
 import { StateExistsPipe } from './pipes/state-exists.pipe';
+import { StateLinkPipe } from './pipes/state-link.pipe';
 
 @Controller('states')
 export class StatesController {
@@ -54,7 +55,7 @@ export class StatesController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, StateExistsPipe) id: number,
+    @Param('id', ParseIntPipe, StateExistsPipe, StateLinkPipe) id: number,
   ): Promise<string> {
     await this.statesService.delete(id);
 

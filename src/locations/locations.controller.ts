@@ -12,6 +12,7 @@ import {
 import { LocationsService } from './locations.service';
 import { Location } from './location.model';
 import { LocationExistsPipe } from './pipes/location-exists.pipe';
+import { LocationLinkPipe } from './pipes/location-link.pipe';
 import { CreateLocationDto } from './dto/create-location.dto';
 
 @Controller('locations')
@@ -63,7 +64,7 @@ export class LocationsController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, LocationExistsPipe) id: number,
+    @Param('id', ParseIntPipe, LocationExistsPipe, LocationLinkPipe) id: number,
   ): Promise<string> {
     await this.locationsService.delete(id);
 

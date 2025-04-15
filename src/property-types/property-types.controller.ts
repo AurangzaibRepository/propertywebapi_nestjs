@@ -3,13 +3,16 @@ import {
   Get,
   Post,
   Put,
+  Delete,
   Param,
   Body,
   ParseIntPipe,
+  HttpCode,
 } from '@nestjs/common';
 import { PropertyTypesService } from './property-types.service';
 import { PropertyType } from 'src/property-types/property-type.model';
 import { PropertyTypeExistsPipe } from './pipes/property-type-exists.pipe';
+import { PropertyTypeLinkPipe } from './pipes/property-type-link.pipe';
 import { CreatePropertyTypeDto } from './dto/create-property-type.dto';
 
 @Controller('property-types')
@@ -49,5 +52,16 @@ export class PropertyTypesController {
     await this.propertyTypesService.update(id, updatePropertyTypeDto);
 
     return 'Property type updated sucessfully';
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  async delete(
+    @Param('id', ParseIntPipe, PropertyTypeExistsPipe, PropertyTypeLinkPipe)
+    id: number,
+  ): Promise<string> {
+    await this.propertyTypesService.delete(id);
+
+    return 'Property type deleted successfully';
   }
 }

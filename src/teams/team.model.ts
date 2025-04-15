@@ -6,6 +6,7 @@ import {
   AllowNull,
   Scopes,
   DefaultScope,
+  HasMany,
   BelongsTo,
   BelongsToMany,
   ForeignKey,
@@ -13,6 +14,7 @@ import {
 import { STATUS } from '../enums/common.enum';
 import { Department } from 'src/departments/department.model';
 import { Language } from 'src/languages/language.model';
+import { Property } from 'src/properties/property.model';
 import { TeamLanguage } from 'src/team-language/team-language.model';
 
 // Scopes
@@ -88,6 +90,9 @@ export class Team extends Model {
 
   @BelongsTo(() => Department)
   department: Department;
+
+  @HasMany(() => Property)
+  properties: Property[];
 
   @BelongsToMany(() => Language, () => TeamLanguage)
   languages: Language[];

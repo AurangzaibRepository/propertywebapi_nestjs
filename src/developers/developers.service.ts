@@ -47,4 +47,10 @@ export class DevelopersService {
       where: { id },
     });
   }
+
+  async delete(id: number) {
+    await this.developer.destroy({
+      where: { id },
+    });
+  }
 }

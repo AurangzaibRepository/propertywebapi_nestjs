@@ -12,6 +12,7 @@ import {
 import { BlogCategoriesService } from './blog-categories.service';
 import { BlogCategory } from './blog-category.model';
 import { BlogCategoryExistsPipe } from './pipes/blog-category-exists.pipe';
+import { BlogCategoryLinkPipe } from './pipes/blog-category-link.pipe';
 import { CreateBlogCategoryDto } from './dto/create-blog-category.dto';
 
 @Controller('blog-categories')
@@ -45,7 +46,8 @@ export class BlogCategoriesController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, BlogCategoryExistsPipe) id: number,
+    @Param('id', ParseIntPipe, BlogCategoryExistsPipe)
+    id: number,
     @Body() updateBlogCategortDto: CreateBlogCategoryDto,
   ): Promise<string> {
     await this.blogCategoryService.update(id, updateBlogCategortDto);
@@ -56,7 +58,8 @@ export class BlogCategoriesController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, BlogCategoryExistsPipe) id: number,
+    @Param('id', ParseIntPipe, BlogCategoryExistsPipe, BlogCategoryLinkPipe)
+    id: number,
   ): Promise<string> {
     await this.blogCategoryService.delete(id);
 

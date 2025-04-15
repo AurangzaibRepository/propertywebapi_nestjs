@@ -8,6 +8,7 @@ import {
   DefaultScope,
   Scopes,
   BelongsTo,
+  ForeignKey,
 } from 'sequelize-typescript';
 import { STATUS } from '../enums/blogs.enum';
 import { BlogCategory } from 'src/blog-categories/blog-category.model';
@@ -68,6 +69,11 @@ export class Blog extends Model {
     values: Object.values(STATUS),
   })
   status: STATUS;
+
+  @ForeignKey(() => BlogCategory)
+  @AllowNull(false)
+  @Column
+  BlogCategoryId: number;
 
   @Column(DataType.STRING(150))
   metadata_title: string;

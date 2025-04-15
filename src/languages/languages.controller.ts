@@ -3,14 +3,17 @@ import {
   Get,
   Post,
   Put,
+  Delete,
   Param,
   Body,
   ParseIntPipe,
+  HttpCode,
 } from '@nestjs/common';
 import { LanguagesService } from './languages.service';
 import { Language } from './language.model';
 import { CreateLanguageDto } from './dto/create-language.dto';
 import { LanguageExistsPipe } from './pipes/language-exists.pipe';
+import { LanguageLinkPipe } from './pipes/language-link.pipe';
 
 @Controller('languages')
 export class LanguagesController {
@@ -47,5 +50,15 @@ export class LanguagesController {
     await this.languagesService.update(id, updateLanguageDto);
 
     return 'Language updated successfully';
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  async delete(
+    @Param('id', ParseIntPipe, LanguageExistsPipe, LanguageLinkPipe) id: number,
+  ): Promise<string> {
+    await this.languagesService.delete(id);
+
+    return 'Language deleted successfully';
   }
 }

@@ -12,6 +12,7 @@ import {
 import { DepartmentsService } from './departments.service';
 import { Department } from './department.model';
 import { DepartmentExistsPipe } from './pipes/department-exists.pipe';
+import { DepartmentLinkPipe } from './pipes/department-link.pipe';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 
 @Controller('departments')
@@ -65,7 +66,8 @@ export class DepartmentsController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, DepartmentExistsPipe) id: number,
+    @Param('id', ParseIntPipe, DepartmentExistsPipe, DepartmentLinkPipe)
+    id: number,
   ): Promise<string> {
     await this.departmentsService.delete(id);
 

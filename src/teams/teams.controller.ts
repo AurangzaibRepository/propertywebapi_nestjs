@@ -13,6 +13,7 @@ import { TeamsService } from './teams.service';
 import { Team } from './team.model';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { TeamExistsPipe } from './pipes/team-exists.pipe';
+import { TeamLinkPipe } from './pipes/team-link.pipe';
 
 @Controller('teams')
 export class TeamsController {
@@ -63,7 +64,7 @@ export class TeamsController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, TeamExistsPipe) id: number,
+    @Param('id', ParseIntPipe, TeamExistsPipe, TeamLinkPipe) id: number,
   ): Promise<string> {
     await this.teamsService.delete(id);
 

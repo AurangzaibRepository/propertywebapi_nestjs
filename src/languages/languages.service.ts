@@ -33,4 +33,10 @@ export class LanguagesService {
       where: { id },
     });
   }
+
+  async delete(id: number) {
+    await this.language.destroy({
+      where: { id },
+    });
+  }
 }
