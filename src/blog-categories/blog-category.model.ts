@@ -10,7 +10,7 @@ import { Blog } from 'src/blogs/blog.model';
 
 @DefaultScope(() => ({
   attributes: ['id', 'name'],
-  order: [['name']],
+  order: [['name', 'ASC']],	
 }))
 @Table({
   modelName: 'BlogCategory',

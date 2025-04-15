@@ -17,11 +17,9 @@ import { FaqsModule } from './faqs/faqs.module';
 import { AmenitiesModule } from './amenities/amenities.module';
 import { PropertiesModule } from './properties/properties.module';
 import { PropertyTypesModule } from './property-types/property-types.module';
-import { PropertyTypeService } from './property-type/property-type.service';
 import { PropertyImagesModule } from './property-images/property-images.module';
 import { MetadataModule } from './metadata/metadata.module';
 import { LanguagesModule } from './languages/languages.module';
-import { LanguageService } from './language/language.service';
 import { TeamLanguageModule } from './team-language/team-language.module';
 import { DevelopersModule } from './developers/developers.module';
 
@@ -61,6 +59,6 @@ import { DevelopersModule } from './developers/developers.module';
     DevelopersModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PropertyTypeService, LanguageService],
+  providers: [AppService],
 })
 export class AppModule {}

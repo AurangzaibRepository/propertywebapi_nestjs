@@ -6,6 +6,7 @@ import {
   DefaultScope,
   BelongsTo,
   HasMany,
+  ForeignKey,
 } from 'sequelize-typescript';
 import { Property } from 'src/properties/property.model';
 import { State } from 'src/states/state.model';
@@ -22,13 +23,16 @@ export class Location extends Model {
   @Column
   name: string;
 
-  @Column({
+  /*@Column({
     allowNull: false,
     references: {
       model: 'states',
       key: 'id',
     },
-  })
+  })*/
+  @ForeignKey(() => State)
+  @AllowNull(false)
+  @Column
   StateId: number;
 
   @BelongsTo(() => State)

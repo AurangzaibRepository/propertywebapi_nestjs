@@ -9,7 +9,7 @@ import {
   ArrayNotEmpty,
   ValidateNested,
 } from 'class-validator';
-import { STATUS } from 'src/enums/blogs.enum';
+import { STATUS } from 'src/enums/common.enum';
 
 export class CreateTeamDto {
   @IsNotEmpty()
