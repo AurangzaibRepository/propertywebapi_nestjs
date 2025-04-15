@@ -25,7 +25,7 @@ export class FaqsService {
   }
 
   async save(data: FAQInterface) {
-    await this.faq.create(data);
+    await this.faq.create(data as Partial<FAQ>);
   }
 
   async update(id: number, data: FAQInterface) {

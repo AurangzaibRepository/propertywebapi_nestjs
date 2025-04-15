@@ -5,7 +5,6 @@ import { Logger } from './logger/logger.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { AuthenticationMiddleware } from './middlewares/authentication.middleware';
 
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'log'],

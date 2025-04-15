@@ -38,7 +38,7 @@ export class LocationsService {
   }
 
   async save(data: LocationInterface) {
-    await this.location.create(data);
+    await this.location.create(data as Partial<Location>);
   }
 
   async update(id: number, data: LocationInterface) {

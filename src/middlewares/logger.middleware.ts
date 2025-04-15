@@ -1,7 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
 
-export function LoggerMiddleware(req: Request, res: Response, next : NextFunction) {
-    console.log(`Request details: [${req.method}] ${req.url}`);
+export function LoggerMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  console.log(`Request details: [${req.method}] ${req.url}`);
 
-    next();
-} 
+  next();
+}

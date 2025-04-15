@@ -39,7 +39,7 @@ export class DevelopersService {
   }
 
   async save(data: DeveloperInterface) {
-    this.developer.create(data);
+    await this.developer.create(data as Partial<Developer>);
   }
 
   async update(id: number, data: DeveloperInterface) {

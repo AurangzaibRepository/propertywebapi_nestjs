@@ -45,14 +45,14 @@ export class BlogsService {
   }
 
   async save(data: BlogInterface) {
-    await this.blog.create(data);
+    await this.blog.create(data as Partial<Blog>);
   }
 
   async update(id: number, data: BlogInterface) {
     await this.blog.update(data, {
-      where: { id }
+      where: { id },
     });
-  })
+  }
 
   async delete(id: number) {
     await this.blog.destroy({

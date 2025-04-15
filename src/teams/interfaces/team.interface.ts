@@ -1,4 +1,4 @@
-import { STATUS } from 'src/enums/blogs.enum';
+import { STATUS } from 'src/enums/common.enum';
 
 export interface TeamInterface {
   name: string;

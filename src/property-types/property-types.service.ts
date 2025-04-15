@@ -25,7 +25,7 @@ export class PropertyTypesService {
   }
 
   async save(data: PropertyTypeInterface) {
-    await this.propertyType.create(data);
+    await this.propertyType.create(data as Partial<PropertyType>);
   }
 
   async update(id: number, data: PropertyTypeInterface) {

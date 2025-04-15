@@ -25,7 +25,7 @@ export class LanguagesService {
   }
 
   async save(data: LanguageInterface) {
-    await this.language.create(data);
+    await this.language.create(data as Partial<Language>);
   }
 
   async update(id: number, data: LanguageInterface) {

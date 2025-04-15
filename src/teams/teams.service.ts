@@ -38,7 +38,7 @@ export class TeamsService {
   }
 
   async save(data: TeamInterface) {
-    await this.team.create(data);
+    await this.team.create(data as Partial<Team>);
   }
 
   async update(id: number, data: TeamInterface) {

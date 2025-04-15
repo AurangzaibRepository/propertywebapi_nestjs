@@ -25,7 +25,7 @@ export class BlogCategoriesService {
   }
 
   async save(data: BlogCategoryInterface) {
-    await this.blogCategory.create(data);
+    await this.blogCategory.create(data as Partial<BlogCategory>);
   }
 
   async update(id: number, data: BlogCategoryInterface) {

@@ -36,7 +36,7 @@ export class DepartmentsService {
   }
 
   async save(data: DepartmentInterface) {
-    await this.department.create(data);
+    await this.department.create(data as Partial<Department>);
   }
 
   async update(id: number, data: DepartmentInterface) {

@@ -25,7 +25,7 @@ export class AmenitiesService {
   }
 
   async save(data: AmenityInterface) {
-    await this.amenity.create(data);
+    await this.amenity.create(data as Partial<Amenity>);
   }
 
   async update(id: number, data: AmenityInterface) {

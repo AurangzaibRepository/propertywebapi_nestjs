@@ -25,7 +25,7 @@ export class StatesService {
   }
 
   async save(data: StateInterface) {
-    await this.state.create(data);
+    await this.state.create(data as Partial<State>);
   }
 
   async update(id: number, data: StateInterface) {

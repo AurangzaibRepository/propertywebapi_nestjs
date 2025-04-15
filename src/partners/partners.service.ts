@@ -38,7 +38,7 @@ export class PartnersService {
   }
 
   async save(data: PartnerInterface) {
-    await this.partner.create(data);
+    await this.partner.create(data as Partial<Partner>);
   }
 
   async update(id: number, data: PartnerInterface) {
