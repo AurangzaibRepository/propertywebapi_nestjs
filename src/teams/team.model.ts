@@ -15,6 +15,7 @@ import { STATUS } from '../enums/common.enum';
 import { Department } from 'src/departments/department.model';
 import { Language } from 'src/languages/language.model';
 import { Property } from 'src/properties/property.model';
+import { Club } from 'src/clubs/club.model';
 import { TeamLanguage } from 'src/team-language/team-language.model';
 
 // Scopes
@@ -68,6 +69,11 @@ export class Team extends Model {
   @Column
   DepartmentId: number;
 
+  @ForeignKey(() => Club)
+  @AllowNull(false)
+  @Column
+  ClubId: number;
+
   @Column({
     allowNull: false,
     defaultValue: STATUS.ACTIVE,
@@ -90,6 +96,9 @@ export class Team extends Model {
 
   @BelongsTo(() => Department)
   department: Department;
+
+  @BelongsTo(() => Club)
+  club: Club;
 
   @HasMany(() => Property)
   properties: Property[];

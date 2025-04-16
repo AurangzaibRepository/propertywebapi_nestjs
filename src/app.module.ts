@@ -22,6 +22,7 @@ import { MetadataModule } from './metadata/metadata.module';
 import { LanguagesModule } from './languages/languages.module';
 import { TeamLanguageModule } from './team-language/team-language.module';
 import { DevelopersModule } from './developers/developers.module';
+import { ClubsModule } from './clubs/clubs.module';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { DevelopersModule } from './developers/developers.module';
     LanguagesModule,
     TeamLanguageModule,
     DevelopersModule,
+    ClubsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
