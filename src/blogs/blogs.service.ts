@@ -44,6 +44,14 @@ export class BlogsService {
     return blog ?? null;
   }
 
+  async getByAttribute(attribute: string, value: any): Promise<Blog | null> {
+    const data = await this.blog.findOne({
+      where: { [attribute]: value },
+    });
+
+    return data;
+  }
+
   async save(data: BlogInterface) {
     await this.blog.create(data as Partial<Blog>);
   }

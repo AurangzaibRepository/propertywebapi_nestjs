@@ -3,9 +3,10 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { State } from './state.model';
 import { StatesService } from './states.service';
 import { StatesController } from './states.controller';
+import { LocationsModule } from 'src/locations/locations.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([State])],
+  imports: [LocationsModule, SequelizeModule.forFeature([State])],
   providers: [StatesService],
   controllers: [StatesController],
 })

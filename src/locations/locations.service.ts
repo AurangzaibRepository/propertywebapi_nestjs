@@ -37,6 +37,17 @@ export class LocationsService {
     return data ?? null;
   }
 
+  async getByAttribute(
+    attribute: string,
+    value: any,
+  ): Promise<Location | null> {
+    const data = await this.location.findOne({
+      where: { [attribute]: value },
+    });
+
+    return data;
+  }
+
   async save(data: LocationInterface) {
     await this.location.create(data as Partial<Location>);
   }

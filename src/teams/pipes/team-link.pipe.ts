@@ -1,20 +1,18 @@
 import { PipeTransform, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { Property } from 'src/properties/property.model';
+import { PropertiesService } from 'src/properties/properties.service';
 
 export class TeamLinkPipe implements PipeTransform {
-  constructor(
-    @InjectModel(Property)
-    private property: typeof Property,
-  ) {}
+  constructor(private propertiesService: PropertiesService) {}
 
   async transform(value: number) {
-    const property = await this.property.findOne({
-      where: { TeamId: value },
-    });
+    // Check if property is linked with team
+    const property = await this.propertiesService.getByAttribute(
+      'TeamId',
+      value,
+    );
 
     if (property) {
-      throw new BadRequestException('Team is linked with property');
+      throw new BadRequestException('Team is linked with Property');
     }
 
     return value;

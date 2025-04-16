@@ -37,6 +37,14 @@ export class TeamsService {
     return data ?? null;
   }
 
+  async getByAttribute(attribute: string, value: any): Promise<Team | null> {
+    const data = await this.team.findOne({
+      where: { [attribute]: value },
+    });
+
+    return data;
+  }
+
   async save(data: TeamInterface) {
     await this.team.create(data as Partial<Team>);
   }

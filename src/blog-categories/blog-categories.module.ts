@@ -3,9 +3,10 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { BlogCategory } from './blog-category.model';
 import { BlogCategoriesService } from './blog-categories.service';
 import { BlogCategoriesController } from './blog-categories.controller';
+import { BlogsModule } from 'src/blogs/blogs.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([BlogCategory])],
+  imports: [BlogsModule, SequelizeModule.forFeature([BlogCategory])],
   providers: [BlogCategoriesService],
   controllers: [BlogCategoriesController]
 })

@@ -3,9 +3,10 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Language } from './language.model';
 import { LanguagesController } from './languages.controller';
 import { LanguagesService } from './languages.service';
+import { TeamLanguageModule } from 'src/team-language/team-language.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Language])],
+  imports: [TeamLanguageModule, SequelizeModule.forFeature([Language])],
   controllers: [LanguagesController],
   providers: [LanguagesService]
 })

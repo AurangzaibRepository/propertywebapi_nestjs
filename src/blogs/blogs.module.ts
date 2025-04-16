@@ -8,5 +8,6 @@ import { Blog } from './blog.model';
   imports: [SequelizeModule.forFeature([Blog])],
   controllers: [BlogsController],
   providers: [BlogsService],
+  exports: [BlogsService]
 })
 export class BlogsModule {}
