@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { APIResponseDto } from './dto/api-response.dto';
+import { MessageType } from './dto/api-response.dto';
 
 @Injectable()
 export class FormatService {
@@ -7,5 +9,17 @@ export class FormatService {
     const offset = pageNumber * pageSize - pageSize;
 
     return [pageSize, offset];
+  }
+
+  generateResponse<T>(
+    statusCode: number,
+    messages: MessageType[] | [],
+    data?: any,
+  ): APIResponseDto<T> {
+    return {
+      statusCode,
+      messages,
+      data,
+    };
   }
 }

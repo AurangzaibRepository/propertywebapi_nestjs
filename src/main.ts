@@ -11,12 +11,19 @@ async function bootstrap() {
   });
   app.useLogger(app.get(Logger));
 
+  // Set global prefix for all routes
+  app.setGlobalPrefix('api');
+
+  // Cors
+  app.enableCors({
+    origin: process.env.CORS_ORIGIN,
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true,
+  });
+
   // Global middlewares
   app.use(AuthenticationMiddleware);
   app.use(LoggerMiddleware);
-
-  // Set global prefix for all routes
-  app.setGlobalPrefix('api');
 
   // Apply global pipes
   // If we do not set here, we need to set in every Body decorator
