@@ -1,5 +1,4 @@
 import { PipeTransform, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
 import { BlogsService } from 'src/blogs/blogs.service';
 
 export class BlogCategoryLinkPipe implements PipeTransform {
