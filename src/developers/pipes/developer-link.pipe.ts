@@ -1,18 +1,15 @@
 import { PipeTransform, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { Property } from 'src/properties/property.model';
+import { PropertiesService } from 'src/properties/properties.service';
 
 export class DeveloperLinkPipe implements PipeTransform {
-  constructor(
-    @InjectModel(Property)
-    private property: typeof Property,
-  ) {}
+  constructor(private propertiesService: PropertiesService) {}
 
   async transform(value: number) {
     // Check if developer is linked with property
-    const property = await this.property.findOne({
-      where: { DeveloperId: value },
-    });
+    const property = await this.propertiesService.getByAttribute(
+      'DeveloperId',
+      value,
+    );
 
     if (property) {
       throw new BadRequestException('Developer is linked with property');

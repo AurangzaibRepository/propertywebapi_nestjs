@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { useContainer, UseContainerOptions } from 'class-validator';
 import { Logger } from './logger/logger.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { AuthenticationMiddleware } from './middlewares/authentication.middleware';
@@ -31,10 +32,12 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       transform: true,
+      stopAtFirstError: true,
     }),
   );
 
-  await app.listen(process.env.PORT || 8000);
-}
+  useContainer(app.select(AppModule), {fallbackOnErrors: true});
+  await app.listen(process.env.APP_PORT || 8000);
+} 
 
-bootstrap();
+bootstrap(); 

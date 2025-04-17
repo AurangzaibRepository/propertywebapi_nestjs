@@ -24,6 +24,14 @@ export class AmenitiesService {
     return data ?? null;
   }
 
+  async getByAttribute(attribute: string, value: any): Promise<Amenity | null> {
+    const data = await this.amenity.findOne({
+      where: { [attribute]: value },
+    });
+
+    return data;
+  }
+
   async save(data: AmenityInterface) {
     await this.amenity.create(data as Partial<Amenity>);
   }

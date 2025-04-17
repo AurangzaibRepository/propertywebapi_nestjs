@@ -1,18 +1,15 @@
 import { PipeTransform, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { Property } from 'src/properties/property.model';
+import { PropertiesService } from 'src/properties/properties.service';
 
 export class PropertyTypeLinkPipe implements PipeTransform {
-  constructor(
-    @InjectModel(Property)
-    private property: typeof Property,
-  ) {}
+  constructor(private propertiesService: PropertiesService) {}
 
   async transform(value: number) {
     // Check if property type is linked with property
-    const property = await this.property.findOne({
-      where: { PropertyTypeId: value },
-    });
+    const property = await this.propertiesService.getByAttribute(
+      'PropertyTypeId',
+      value,
+    );
 
     if (property) {
       throw new BadRequestException('Property type is linked with property');

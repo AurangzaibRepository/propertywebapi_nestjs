@@ -1,18 +1,15 @@
 import { PipeTransform, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { TeamLanguage } from 'src/team-language/team-language.model';
+import { TeamLanguagesService } from 'src/team-language/team-languages.service';
 
 export class LanguageLinkPipe implements PipeTransform {
-  constructor(
-    @InjectModel(TeamLanguage)
-    private teamLanguage: typeof TeamLanguage,
-  ) {}
+  constructor(private teamLanguagesService: TeamLanguagesService) {}
 
   async transform(value: number) {
     // Check if language is linked with team
-    const teamLanguage = await this.teamLanguage.findOne({
-      where: { LanguageId: value },
-    });
+    const teamLanguage = await this.teamLanguagesService.getByAttribute(
+      'LanguageId',
+      value,
+    );
 
     if (teamLanguage) {
       throw new BadRequestException('Language is linked with team');

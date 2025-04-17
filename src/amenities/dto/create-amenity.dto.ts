@@ -1,14 +1,19 @@
-import { IsString, IsNotEmpty, Length } from 'class-validator';
+import { IsNotEmpty, MaxLength, Validate } from 'class-validator';
+import { AmenityCodeExists } from '../validator-constraints/amenity-code-exists.constraint';
 
 export class CreateAmenityDto {
-  @IsString()
-  @IsNotEmpty()
-  @Length(1, 5, {
-    message: 'Code must be between 1 and 5 characters long',
-  })
+  //@Validate(AmenityCodeExists) 
+  @MaxLength(5, {
+    message: 'Code cannot be greater than 5 characters',
+  }) 
+  // Define here as decorators are executed in reverse order
+  @IsNotEmpty({
+    message: 'Code is required',
+  }) 
   code: string;
 
-  @IsString()
-  @IsNotEmpty()
-  name: string;
+  @IsNotEmpty({
+    message: 'Name is required',
+  })
+  name: string; 
 }

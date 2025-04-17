@@ -6,13 +6,13 @@ import {
   Delete,
   HttpCode,
   Param,
-  Body,
-  ParseIntPipe,
+  Body
 } from '@nestjs/common';
 import { BlogCategoriesService } from './blog-categories.service';
 import { BlogCategory } from './blog-category.model';
 import { BlogCategoryExistsPipe } from './pipes/blog-category-exists.pipe';
 import { BlogCategoryLinkPipe } from './pipes/blog-category-link.pipe';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { CreateBlogCategoryDto } from './dto/create-blog-category.dto';
 
 @Controller('blog-categories')
@@ -28,7 +28,7 @@ export class BlogCategoriesController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, BlogCategoryExistsPipe) id: number,
+    @Param('id', IntPipe, BlogCategoryExistsPipe) id: number,
   ): Promise<BlogCategory | string> {
     const category = await this.blogCategoryService.getDetails(id);
 
@@ -46,7 +46,7 @@ export class BlogCategoriesController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, BlogCategoryExistsPipe)
+    @Param('id', IntPipe, BlogCategoryExistsPipe)
     id: number,
     @Body() updateBlogCategortDto: CreateBlogCategoryDto,
   ): Promise<string> {
@@ -58,7 +58,7 @@ export class BlogCategoriesController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, BlogCategoryExistsPipe, BlogCategoryLinkPipe)
+    @Param('id', IntPipe, BlogCategoryExistsPipe, BlogCategoryLinkPipe)
     id: number,
   ): Promise<string> {
     await this.blogCategoryService.delete(id);

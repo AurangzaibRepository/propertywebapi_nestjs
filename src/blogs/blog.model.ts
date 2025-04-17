@@ -82,7 +82,7 @@ export class Blog extends Model {
   metadata_description: string;
 
   @Column(DataType.TEXT)
-  metadata_focus_keyword: string;
+  metadata_focus_keywords: string;
 
   @Column(DataType.STRING(500))
   metadata_canonical_url: string;
@@ -91,5 +91,5 @@ export class Blog extends Model {
   metadata_schema: string;
 
   @BelongsTo(() => BlogCategory)
-  blogCategory: BlogCategory;
+  blogCategory: BlogCategory; 
 }

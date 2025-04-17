@@ -6,12 +6,12 @@ import {
   Delete,
   HttpCode,
   Param,
-  ParseIntPipe,
   Body,
 } from '@nestjs/common';
 import { AmenitiesService } from './amenities.service';
 import { Amenity } from './amenity.model';
 import { AmenityExistsPipe } from './pipes/amenity-exists.pipe';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { CreateAmenityDto } from './dto/create-amenity.dto';
 
 @Controller('amenities')
@@ -27,23 +27,27 @@ export class AmenitiesController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, AmenityExistsPipe) id: number,
-  ): Promise<Amenity | string> {
+    @Param('id', IntPipe, AmenityExistsPipe)
+    id: number,
+  ): Promise<Amenity | null> {
     const data = await this.amenitiesService.getDetails(id);
 
-    return data ?? 'Amenity not found';
+    return data;
   }
 
   @Post()
-  async create(@Body() createAmenityDto: CreateAmenityDto): Promise<string> {
-    await this.amenitiesService.save(createAmenityDto);
+  async create(@Body() createAmenityDto: CreateAmenityDto): Promise<object> {
+    //await this.amenitiesService.save(createAmenityDto);
 
-    return 'Amenity created successfully';
+    return {
+      message: 'Amenity created successfully',
+      statusCode: 201, 
+    }; 
   }
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, AmenityExistsPipe) id: number,
+    @Param('id', IntPipe, AmenityExistsPipe) id: number,
     @Body() updateAmenityDto: CreateAmenityDto,
   ): Promise<string> {
     await this.amenitiesService.update(id, updateAmenityDto);
@@ -54,7 +58,7 @@ export class AmenitiesController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, AmenityExistsPipe) id: number,
+    @Param('id', IntPipe, AmenityExistsPipe) id: number,
   ): Promise<string> {
     await this.amenitiesService.delete(id);
 

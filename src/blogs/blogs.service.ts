@@ -18,7 +18,7 @@ export class BlogsService {
 
   async getAll(): Promise<Blog[]> {
     const data = await this.blog.findAll({
-      order: [['name', 'ASC']],
+      order: [['title', 'ASC']],
     });
 
     return data;

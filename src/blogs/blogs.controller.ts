@@ -6,12 +6,12 @@ import {
   Delete,
   Param,
   Body,
-  HttpCode,
-  ParseIntPipe,
+  HttpCode
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { Blog } from './blog.model';
 import { BlogExistsPipe } from './pipes/blog-exists.pipe';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { CreateBlogDto } from './dto/create-blog.dto';
 
 @Controller('blogs')
@@ -27,7 +27,7 @@ export class BlogsController {
 
   @Get('listing/:pageNumber')
   async listing(
-    @Param('pageNumber', ParseIntPipe) pageNumber: number,
+    @Param('pageNumber', IntPipe) pageNumber: number,
   ): Promise<Blog[]> {
     const data = await this.blogsService.getListing(pageNumber);
 
@@ -36,7 +36,7 @@ export class BlogsController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, BlogExistsPipe) id: number,
+    @Param('id', IntPipe, BlogExistsPipe) id: number,
   ): Promise<Blog | string> {
     const blog = await this.blogsService.getDetails(id);
 
@@ -52,7 +52,7 @@ export class BlogsController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, BlogExistsPipe) id: number,
+    @Param('id', IntPipe, BlogExistsPipe) id: number,
     @Body() updateBlogDto: CreateBlogDto,
   ): Promise<string> {
     await this.blogsService.update(id, updateBlogDto);
@@ -63,7 +63,7 @@ export class BlogsController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, BlogExistsPipe) id: number,
+    @Param('id', IntPipe, BlogExistsPipe) id: number,
   ): Promise<string> {
     await this.blogsService.delete(id);
 
