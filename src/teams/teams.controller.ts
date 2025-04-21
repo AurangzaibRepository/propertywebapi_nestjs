@@ -6,12 +6,12 @@ import {
   Delete,
   HttpCode,
   Param,
-  Body,
-  ParseIntPipe,
+  Body
 } from '@nestjs/common';
 import { TeamsService } from './teams.service';
 import { Team } from './team.model';
 import { CreateTeamDto } from './dto/create-team.dto';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { TeamExistsPipe } from './pipes/team-exists.pipe';
 import { TeamLinkPipe } from './pipes/team-link.pipe';
 
@@ -28,7 +28,7 @@ export class TeamsController {
 
   @Get('listing/:pageNumber')
   async listing(
-    @Param('pageNumber', ParseIntPipe) pageNumber: number,
+    @Param('pageNumber', IntPipe) pageNumber: number,
   ): Promise<Team[]> {
     const data = await this.teamsService.getListing(pageNumber);
 
@@ -37,7 +37,7 @@ export class TeamsController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, TeamExistsPipe) id: number,
+    @Param('id', IntPipe, TeamExistsPipe) id: number,
   ): Promise<Team | string> {
     const data = await this.teamsService.getDetails(id);
 
@@ -53,7 +53,7 @@ export class TeamsController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, TeamExistsPipe) id: number,
+    @Param('id', IntPipe, TeamExistsPipe) id: number,
     @Body() updateTeamDto: CreateTeamDto,
   ): Promise<string> {
     await this.teamsService.update(id, updateTeamDto);
@@ -64,7 +64,7 @@ export class TeamsController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, TeamExistsPipe, TeamLinkPipe) id: number,
+    @Param('id', IntPipe, TeamExistsPipe, TeamLinkPipe) id: number,
   ): Promise<string> {
     await this.teamsService.delete(id);
 

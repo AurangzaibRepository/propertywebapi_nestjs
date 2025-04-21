@@ -6,9 +6,9 @@ import {
   Delete,
   Param,
   Body,
-  ParseIntPipe,
   HttpCode,
 } from '@nestjs/common';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { DeveloperExistsPipe } from './pipes/developer-exists.pipe';
 import { DeveloperLinkPipe } from './pipes/developer-link.pipe';
 import { DevelopersService } from './developers.service';
@@ -28,7 +28,7 @@ export class DevelopersController {
 
   @Get('listing/:pageNumber')
   async listing(
-    @Param('pageNumber', ParseIntPipe) pageNumber: number,
+    @Param('pageNumber', IntPipe) pageNumber: number,
   ): Promise<Developer[]> {
     const data = await this.developersService.getListing(pageNumber);
 
@@ -37,7 +37,7 @@ export class DevelopersController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, DeveloperExistsPipe) id: number,
+    @Param('id', IntPipe, DeveloperExistsPipe) id: number,
   ): Promise<Developer | string> {
     const data = await this.developersService.getDetails(id);
 
@@ -55,7 +55,7 @@ export class DevelopersController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, DeveloperExistsPipe) id: number,
+    @Param('id', IntPipe, DeveloperExistsPipe) id: number,
     @Body() createDeveloperDto: CreateDeveloperDto,
   ): Promise<string> {
     await this.developersService.update(id, createDeveloperDto);
@@ -66,7 +66,7 @@ export class DevelopersController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, DeveloperExistsPipe, DeveloperLinkPipe)
+    @Param('id', IntPipe, DeveloperExistsPipe, DeveloperLinkPipe)
     id: number,
   ): Promise<string> {
     await this.developersService.delete(id);

@@ -6,9 +6,9 @@ import {
   Delete,
   HttpCode,
   Param,
-  Body,
-  ParseIntPipe,
+  Body
 } from '@nestjs/common';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { PageValidationPipe } from './pipes/page-validation.pipe';
 import { FAQExistsPipe } from './pipes/faq-exists.pipe';
 import { FaqsService } from './faqs.service';
@@ -28,7 +28,7 @@ export class FaqsController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, FAQExistsPipe) id: number,
+    @Param('id', IntPipe, FAQExistsPipe) id: number,
   ): Promise<FAQ | string> {
     const data = await this.faqsService.getDetails(id);
 
@@ -44,7 +44,7 @@ export class FaqsController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, FAQExistsPipe) id: number,
+    @Param('id', IntPipe, FAQExistsPipe) id: number,
     @Body() updateFAQDto: CreateFAQDto,
   ): Promise<string> {
     await this.faqsService.update(id, updateFAQDto);
@@ -55,7 +55,7 @@ export class FaqsController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, FAQExistsPipe) id: number,
+    @Param('id', IntPipe, FAQExistsPipe) id: number,
   ): Promise<string> {
     await this.faqsService.delete(id);
 

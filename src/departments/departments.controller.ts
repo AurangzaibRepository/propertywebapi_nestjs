@@ -6,11 +6,11 @@ import {
   Delete,
   HttpCode,
   Param,
-  Body,
-  ParseIntPipe,
+  Body
 } from '@nestjs/common';
 import { DepartmentsService } from './departments.service';
 import { Department } from './department.model';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { DepartmentExistsPipe } from './pipes/department-exists.pipe';
 import { DepartmentLinkPipe } from './pipes/department-link.pipe';
 import { CreateDepartmentDto } from './dto/create-department.dto';
@@ -28,7 +28,7 @@ export class DepartmentsController {
 
   @Get('listing/:pageNumber')
   async listing(
-    @Param('pageNumber', ParseIntPipe) pageNumber: number,
+    @Param('pageNumber', IntPipe) pageNumber: number,
   ): Promise<Department[]> {
     const data = await this.departmentsService.getListing(pageNumber);
 
@@ -37,7 +37,7 @@ export class DepartmentsController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, DepartmentExistsPipe) id: number,
+    @Param('id', IntPipe, DepartmentExistsPipe) id: number,
   ): Promise<Department | string> {
     const data = await this.departmentsService.getDetails(id);
 
@@ -55,7 +55,7 @@ export class DepartmentsController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, DepartmentExistsPipe) id: number,
+    @Param('id', IntPipe, DepartmentExistsPipe) id: number,
     @Body() updateDepartmentDto: CreateDepartmentDto,
   ): Promise<string> {
     await this.departmentsService.update(id, updateDepartmentDto);
@@ -66,7 +66,7 @@ export class DepartmentsController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, DepartmentExistsPipe, DepartmentLinkPipe)
+    @Param('id', IntPipe, DepartmentExistsPipe, DepartmentLinkPipe)
     id: number,
   ): Promise<string> {
     await this.departmentsService.delete(id);

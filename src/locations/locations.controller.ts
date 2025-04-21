@@ -6,11 +6,11 @@ import {
   Delete,
   HttpCode,
   Param,
-  Body,
-  ParseIntPipe,
+  Body
 } from '@nestjs/common';
 import { LocationsService } from './locations.service';
 import { Location } from './location.model';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { LocationExistsPipe } from './pipes/location-exists.pipe';
 import { LocationLinkPipe } from './pipes/location-link.pipe';
 import { CreateLocationDto } from './dto/create-location.dto';
@@ -28,7 +28,7 @@ export class LocationsController {
 
   @Get('listing/:pageNumber')
   async listing(
-    @Param('pageNumber', ParseIntPipe) pageNumber: number,
+    @Param('pageNumber', IntPipe) pageNumber: number,
   ): Promise<Location[]> {
     const data = await this.locationsService.getListing(pageNumber);
 
@@ -37,7 +37,7 @@ export class LocationsController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, LocationExistsPipe) id: number,
+    @Param('id', IntPipe, LocationExistsPipe) id: number,
   ): Promise<Location | string> {
     const data = await this.locationsService.getDetails(id);
 
@@ -53,7 +53,7 @@ export class LocationsController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, LocationExistsPipe) id: number,
+    @Param('id', IntPipe, LocationExistsPipe) id: number,
     @Body() updateLocationDto: CreateLocationDto,
   ): Promise<string> {
     await this.locationsService.update(id, updateLocationDto);
@@ -64,7 +64,7 @@ export class LocationsController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, LocationExistsPipe, LocationLinkPipe) id: number,
+    @Param('id', IntPipe, LocationExistsPipe, LocationLinkPipe) id: number,
   ): Promise<string> {
     await this.locationsService.delete(id);
 

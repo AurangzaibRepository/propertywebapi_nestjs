@@ -6,12 +6,12 @@ import {
   Delete,
   Param,
   Body,
-  ParseIntPipe,
-  HttpCode,
+  HttpCode
 } from '@nestjs/common';
 import { LanguagesService } from './languages.service';
 import { Language } from './language.model';
 import { CreateLanguageDto } from './dto/create-language.dto';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { LanguageExistsPipe } from './pipes/language-exists.pipe';
 import { LanguageLinkPipe } from './pipes/language-link.pipe';
 
@@ -28,7 +28,7 @@ export class LanguagesController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, LanguageExistsPipe) id: number,
+    @Param('id', IntPipe, LanguageExistsPipe) id: number,
   ): Promise<Language | string> {
     const data = await this.languagesService.getDetails(id);
 
@@ -44,7 +44,7 @@ export class LanguagesController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, LanguageExistsPipe) id: number,
+    @Param('id', IntPipe, LanguageExistsPipe) id: number,
     @Body() updateLanguageDto: CreateLanguageDto,
   ): Promise<string> {
     await this.languagesService.update(id, updateLanguageDto);
@@ -55,7 +55,7 @@ export class LanguagesController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, LanguageExistsPipe, LanguageLinkPipe) id: number,
+    @Param('id', IntPipe, LanguageExistsPipe, LanguageLinkPipe) id: number,
   ): Promise<string> {
     await this.languagesService.delete(id);
 

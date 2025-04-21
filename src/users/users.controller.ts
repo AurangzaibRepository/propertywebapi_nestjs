@@ -6,12 +6,12 @@ import {
   Delete,
   Param,
   Body,
-  HttpCode,
-  ParseIntPipe,
+  HttpCode
 } from '@nestjs/common';
 import { User } from './user.model';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { UserExistsPipe } from './pipes/user-exists.pipe';
 
 @Controller('users')
@@ -27,7 +27,7 @@ export class UsersController {
 
   @Get('listing/:pageNumber')
   async listing(
-    @Param('pageNumber', ParseIntPipe) pageNumber: number,
+    @Param('pageNumber', IntPipe) pageNumber: number,
   ): Promise<User[]> {
     const data = await this.usersService.getListing(pageNumber);
 
@@ -36,7 +36,7 @@ export class UsersController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, UserExistsPipe) id: number,
+    @Param('id', IntPipe, UserExistsPipe) id: number,
   ): Promise<User | string> {
     const user = await this.usersService.getDetails(id);
 
@@ -52,7 +52,7 @@ export class UsersController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, UserExistsPipe) id: number,
+    @Param('id', IntPipe, UserExistsPipe) id: number,
     @Body() updateUserDto: CreateUserDto,
   ): Promise<string> {
     await this.usersService.update(id, updateUserDto);
@@ -63,7 +63,7 @@ export class UsersController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, UserExistsPipe) id: number,
+    @Param('id', IntPipe, UserExistsPipe) id: number,
   ): Promise<string> {
     await this.usersService.delete(id);
 

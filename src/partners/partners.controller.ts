@@ -6,11 +6,11 @@ import {
   Delete,
   HttpCode,
   Param,
-  Body,
-  ParseIntPipe,
+  Body
 } from '@nestjs/common';
 import { PartnersService } from './partners.service';
 import { Partner } from './partner.model';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { PartnerExistsPipe } from './pipes/partner-exists.pipe';
 import { CreatePartnerDto } from './dto/create-partner.dto';
 
@@ -27,7 +27,7 @@ export class PartnersController {
 
   @Get('listing/:pageNumber')
   async listing(
-    @Param('pageNumber', ParseIntPipe) pageNumber: number,
+    @Param('pageNumber', IntPipe) pageNumber: number,
   ): Promise<Partner[]> {
     const data = await this.partnersService.getListing(pageNumber);
 
@@ -36,7 +36,7 @@ export class PartnersController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, PartnerExistsPipe) id: number,
+    @Param('id', IntPipe, PartnerExistsPipe) id: number,
   ): Promise<Partner | string> {
     const data = await this.partnersService.getDetails(id);
 
@@ -52,7 +52,7 @@ export class PartnersController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, PartnerExistsPipe) id: number,
+    @Param('id', IntPipe, PartnerExistsPipe) id: number,
     @Body() updatePartnerDto: CreatePartnerDto,
   ): Promise<string> {
     await this.partnersService.update(id, updatePartnerDto);
@@ -63,7 +63,7 @@ export class PartnersController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, PartnerExistsPipe) id: number,
+    @Param('id', IntPipe, PartnerExistsPipe) id: number,
   ): Promise<string> {
     await this.partnersService.delete(id);
 

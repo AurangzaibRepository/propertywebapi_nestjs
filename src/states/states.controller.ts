@@ -6,12 +6,12 @@ import {
   Delete,
   HttpCode,
   Param,
-  Body,
-  ParseIntPipe,
+  Body
 } from '@nestjs/common';
 import { StatesService } from './states.service';
 import { State } from './state.model';
 import { CreateStateDto } from './dto/create-state.dto';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { StateExistsPipe } from './pipes/state-exists.pipe';
 import { StateLinkPipe } from './pipes/state-link.pipe';
 
@@ -28,7 +28,7 @@ export class StatesController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, StateExistsPipe) id: number,
+    @Param('id', IntPipe, StateExistsPipe) id: number,
   ): Promise<State | string> {
     const data = await this.statesService.getDetails(id);
 
@@ -44,7 +44,7 @@ export class StatesController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, StateExistsPipe) id: number,
+    @Param('id', IntPipe, StateExistsPipe) id: number,
     @Body() updateStateDto: CreateStateDto,
   ): Promise<string> {
     await this.statesService.update(id, updateStateDto);
@@ -55,7 +55,7 @@ export class StatesController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, StateExistsPipe, StateLinkPipe) id: number,
+    @Param('id', IntPipe, StateExistsPipe, StateLinkPipe) id: number,
   ): Promise<string> {
     await this.statesService.delete(id);
 

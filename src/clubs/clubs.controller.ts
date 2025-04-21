@@ -6,11 +6,11 @@ import {
   Delete,
   Param,
   Body,
-  HttpCode,
-  ParseIntPipe,
+  HttpCode
 } from '@nestjs/common';
 import { ClubsService } from './clubs.service';
 import { CreateClubDto } from './dto/create-club.dto';
+import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { ClubExistsPipe } from './pipes/club-exists.pipe';
 import { ClubLinkPipe } from './pipes/club-link.pipe';
 import { Club } from './club.model';
@@ -28,7 +28,7 @@ export class ClubsController {
 
   @Get(':id')
   async details(
-    @Param('id', ParseIntPipe, ClubExistsPipe) id: number,
+    @Param('id', IntPipe, ClubExistsPipe) id: number,
   ): Promise<Club | string> {
     const data = await this.clubsService.getDetails(id);
 
@@ -44,7 +44,7 @@ export class ClubsController {
 
   @Put(':id')
   async update(
-    @Param('id', ParseIntPipe, ClubExistsPipe) id: number,
+    @Param('id', IntPipe, ClubExistsPipe) id: number,
     @Body() updateClubDto: CreateClubDto,
   ): Promise<string> {
     await this.clubsService.update(id, updateClubDto);
@@ -55,7 +55,7 @@ export class ClubsController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', ParseIntPipe, ClubExistsPipe, ClubLinkPipe) id: number,
+    @Param('id', IntPipe, ClubExistsPipe, ClubLinkPipe) id: number,
   ): Promise<string> {
     await this.clubsService.delete(id);
 
