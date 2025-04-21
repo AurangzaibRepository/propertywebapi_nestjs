@@ -23,6 +23,7 @@ import { LanguagesModule } from './languages/languages.module';
 import { TeamLanguageModule } from './team-language/team-language.module';
 import { DevelopersModule } from './developers/developers.module';
 import { ClubsModule } from './clubs/clubs.module';
+import { PropertyAmenitiesModule } from './property-amenities/property-amenities.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { ClubsModule } from './clubs/clubs.module';
     TeamLanguageModule,
     DevelopersModule,
     ClubsModule,
+    PropertyAmenitiesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

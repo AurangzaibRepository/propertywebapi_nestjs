@@ -9,9 +9,12 @@ import {
   ForeignKey,
   BelongsTo,
   HasMany,
+  BelongsToMany
 } from 'sequelize-typescript';
 import { Location } from 'src/locations/location.model';
 import { Team } from 'src/teams/team.model';
+import { Amenity } from 'src/amenities/amenity.model';
+import { PropertyAmenity } from 'src/property-amenities/property-amenity.model';
 import { PropertyType } from 'src/property-types/property-type.model';
 import { PropertyImage } from 'src/property-images/property-image.model';
 import { Developer } from 'src/developers/developer.model';
@@ -144,4 +147,7 @@ export class Property extends Model {
 
   @HasMany(() => PropertyImage)
   propertyImages: PropertyImage[];
+
+  @BelongsToMany(() => Amenity, () => PropertyAmenity)
+  amenities: Amenity[];
 }
