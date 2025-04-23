@@ -13,6 +13,7 @@ import { Amenity } from './amenity.model';
 import { AmenityExistsPipe } from './pipes/amenity-exists.pipe';
 import { IntPipe } from 'src/helpers/pipes/int-pipe.pipe';
 import { CreateAmenityDto } from './dto/create-amenity.dto';
+import { AmenityLinkPipe } from './pipes/amenity-link.pipe';
 
 @Controller('amenities')
 export class AmenitiesController {
@@ -41,8 +42,8 @@ export class AmenitiesController {
 
     return {
       message: 'Amenity created successfully',
-      statusCode: 201, 
-    }; 
+      statusCode: 201,
+    };
   }
 
   @Put(':id')
@@ -58,7 +59,7 @@ export class AmenitiesController {
   @Delete(':id')
   @HttpCode(204)
   async delete(
-    @Param('id', IntPipe, AmenityExistsPipe) id: number,
+    @Param('id', IntPipe, AmenityExistsPipe, AmenityLinkPipe) id: number,
   ): Promise<string> {
     await this.amenitiesService.delete(id);
 
