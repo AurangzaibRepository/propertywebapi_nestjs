@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Property } from './property.model';
 import { FormatService } from 'src/helpers/format.service';
+import { PropertyInterface } from './interfaces/property.interface';
 
 @Injectable()
 export class PropertiesService {
@@ -39,11 +40,11 @@ export class PropertiesService {
     return data;
   }
 
-  async save(data: Property) {
+  async save(data: PropertyInterface) {
     await this.property.create(data as Partial<Property>);
   }
 
-  async update(id: number, data: Property) {
+  async update(id: number, data: PropertyInterface) {
     await this.property.update(data, {
       where: { id}
     });
