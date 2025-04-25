@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { ThrottlerModule, ThrottlerGuard, minutes } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -40,6 +42,14 @@ import { PropertyAmenitiesModule } from './property-amenities/property-amenities
       autoLoadModels: true,
       synchronize: true,
     }),
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: minutes(1), //60000, // Milliseconds (1 minute)
+          limit: 100,
+        },
+      ],
+    }),
     UsersModule,
     BlogsModule,
     LoggerModule,
@@ -63,6 +73,13 @@ import { PropertyAmenitiesModule } from './property-amenities/property-amenities
     PropertyAmenitiesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      // Guard for throttling
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}
